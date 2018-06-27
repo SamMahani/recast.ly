@@ -1,7 +1,7 @@
 var VideoList = props => (
   <div className="video-list">
     {props.videos.map((video, index) => (
-      <VideoListEntry key={index} video={video} />
+      <VideoListEntry key={index} index={index} video={video} clickCallback={props.clickCallback} />
     ))}
   </div>
 );
@@ -15,7 +15,3 @@ VideoList.propTypes = {
 // In the ES6 spec, files are "modules" and do not share a top-level scope.
 // `var` declarations will only exist globally where explicitly defined.
 window.VideoList = VideoList;
-
-{
-  /* ReactDOM.render(<VideoList videos={exampleVideoData} />, document.getElementById('list')); */
-}
