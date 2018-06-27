@@ -10,9 +10,10 @@
     "postinstall": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
     "liveinstall": "npm install -g live-server",
     "babelinstall": "npm install -g babel-cli",
-    "start": "npm run postinstall & npm run liveinstall & npm run babelinstall",
-    "babelcompile": "babel . --out-dir compiled --presets=env,react --ignore=node_modules,compiled --source-maps inline",
-    "dev": "run-when-changed --watch '**/*.jsx' --exec 'npm run babelcompile' ."
+    "setup": "npm run postinstall & npm run liveinstall & npm run babelinstall",
+    "start": "live-server",
+    "build": "babel . --out-dir compiled --presets=env,react --ignore=node_modules,compiled --source-maps inline -w",
+    "dev": "npm run build & npm start"
   },
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.2",
@@ -27,7 +28,6 @@
     "babel-preset-react": "^6.5.0",
     "chai": "^3.5.0",
     "mocha": "2.3.3",
-    "run-when-changed": "^2.1.0",
     "sinon": "1.17.3"
   }
 }
