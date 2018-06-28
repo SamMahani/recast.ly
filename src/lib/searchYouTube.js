@@ -13,7 +13,7 @@ var searchYouTube = (options, callback) => {
       videoEmbeddable: true  
     },
     success: function(data) {
-      callback(data.items);
+      callback(data.items.length ? data.items : window.exampleVideoData);
     },
     error: function() {
       console.log('recase.ly: search request failed');

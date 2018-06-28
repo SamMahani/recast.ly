@@ -37,7 +37,7 @@ class App extends React.Component {
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
             <div id="search">
-              <Search enterCallback={this.enterSearch.bind(this)} />
+              <Search enterSearch={this.enterSearch.bind(this)} />
             </div>
           </div>
         </nav>
@@ -49,7 +49,7 @@ class App extends React.Component {
           </div>
           <div className="col-md-5">
             <div id="list">
-              <VideoList videos={this.state.videos} clickCallback={this.clickVideo.bind(this)} />
+              <VideoList videos={this.state.videos} clickVideo={this.clickVideo.bind(this)} />
             </div>
           </div>
         </div>
