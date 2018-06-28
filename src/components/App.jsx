@@ -4,21 +4,31 @@ class App extends React.Component {
     super(props);
     this.state = {
       videos: exampleVideoData,
-      currentIndex: 0
+      currentIndex: 0,
+      key: window.YOUTUBE_API_KEY,
+      maxResults: 5
     };
   }
 
   componentDidMount() {
-    var options = { query: 'cats', key: window.YOUTUBE_API_KEY, max: 5 };
-    this.props.searchYouTube(options, this.updateVideos.bind(this));
+    this.search('cats');
   }
   
   updateVideos(videos) {
+    console.log(videos);
     this.setState({ videos: videos });
   }
 
   clickVideo(index) {
     this.setState({ currentIndex: index });
+  }
+
+  enterSearch(e) {
+    this.search(e.target.value);
+  }
+
+  search(query) {
+    this.props.searchYouTube({ query: query, key: this.state.key, max: this.state.maxResults }, this.updateVideos.bind(this));
   }
 
   render() {
@@ -27,7 +37,7 @@ class App extends React.Component {
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
             <div id="search">
-              <Search />
+              <Search enterCallback={this.enterSearch.bind(this)} />
             </div>
           </div>
         </nav>
