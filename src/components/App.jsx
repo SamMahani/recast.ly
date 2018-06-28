@@ -8,8 +8,16 @@ class App extends React.Component {
     };
   }
 
+  componentDidMount() {
+    var options = { query: 'cats', key: window.YOUTUBE_API_KEY, max: 5 };
+    this.props.searchYouTube(options, this.updateVideos.bind(this));
+  }
+  
+  updateVideos(videos) {
+    this.setState({ videos: videos });
+  }
+
   clickVideo(index) {
-    console.log(index);
     this.setState({ currentIndex: index });
   }
 
