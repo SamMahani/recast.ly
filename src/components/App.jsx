@@ -3,19 +3,19 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      videos: exampleVideoData,
+      videos: [],
+      query: 'cats',
       currentIndex: 0,
-      key: window.YOUTUBE_API_KEY,
-      maxResults: 5
+      maxResults: 5,
+      searchInput: { value: '' }
     };
   }
 
   componentDidMount() {
-    this.search('cats');
+    this.search();
   }
   
   updateVideos(videos) {
-    console.log(videos);
     this.setState({ videos: videos });
   }
 
@@ -24,11 +24,20 @@ class App extends React.Component {
   }
 
   enterSearch(e) {
-    this.search(e.target.value);
+    this.setState({ query: e.target.value, searchInput: e.target });
+    if (e.key === 'Enter') {
+      this.search();
+    }
   }
 
-  search(query) {
-    this.props.searchYouTube({ query: query, key: this.state.key, max: this.state.maxResults }, this.updateVideos.bind(this));
+  search() {
+    this.props.searchYouTube({ 
+      query: this.state.query, 
+      key: this.props.searchKey, 
+      max: this.props.maxResults 
+    }, this.updateVideos.bind(this));
+    this.state.searchInput.value = '';
+    this.state.searchInput.focus();
   }
 
   render() {
@@ -37,14 +46,14 @@ class App extends React.Component {
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
             <div id="search">
-              <Search enterSearch={this.enterSearch.bind(this)} />
+              <Search enterSearch={this.enterSearch.bind(this)} clickSearch={this.search.bind(this)} />
             </div>
           </div>
         </nav>
         <div className="row">
           <div className="col-md-7">
             <div id="player">
-              <VideoPlayer video={this.state.videos[this.state.currentIndex]} />
+              <VideoPlayer video={this.state.videos.length ? this.state.videos[this.state.currentIndex] : this.props.defaultVideo} />
             </div>
           </div>
           <div className="col-md-5">
